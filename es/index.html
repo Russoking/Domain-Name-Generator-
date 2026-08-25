@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador de Nombres de Dominio — Combina Dos Palabras al Instante</title>
+<meta name="description" content="Genera nombres de dominio combinando dos palabras al instante. Elige una palabra, un estilo y una extensión, y obtén ideas reales de .com, .io, .co y .es para registrar hoy mismo.">
+<link rel="alternate" hreflang="en" href="../index.html">
+<link rel="alternate" hreflang="es" href="index.html">
+<link rel="alternate" hreflang="x-default" href="../index.html">
+<link rel="canonical" href="https://YOUR-DOMAIN.com/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12181A;
+    --ink-raised:#1B2325;
+    --paper:#EDEDE6;
+    --paper-dim:#B9BDB6;
+    --brass:#C9A227;
+    --brass-bright:#E0BA3D;
+    --teal:#4C7A77;
+    --line: rgba(237,237,230,0.12);
+    --radius: 3px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--brass-bright);}
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+  header.hero{
+    padding:64px 0 40px;
+    border-bottom:1px solid var(--line);
+  }
+  .lang-switch{
+    display:flex;
+    justify-content:flex-end;
+    padding-top:20px;
+  }
+  .lang-switch a{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.05em;
+    color:var(--paper-dim);
+    text-decoration:none;
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:6px 12px;
+    transition:color 0.15s ease, border-color 0.15s ease;
+  }
+  .lang-switch a:hover{
+    color:var(--brass-bright);
+    border-color:var(--brass);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin:0 0 18px;
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-optical-sizing:auto;
+    font-weight:600;
+    font-size:clamp(32px,5.2vw,52px);
+    line-height:1.08;
+    margin:0 0 18px;
+    letter-spacing:-0.01em;
+  }
+  h1 em{
+    font-style:italic;
+    font-weight:400;
+    color:var(--brass-bright);
+  }
+  .sub{
+    font-size:17px;
+    color:var(--paper-dim);
+    max-width:56ch;
+    margin:0;
+  }
+
+  .panel{padding:32px 0 8px;}
+  .controls{
+    display:grid;
+    grid-template-columns: 1.3fr 1fr 0.9fr auto;
+    gap:12px;
+    align-items:end;
+  }
+  @media (max-width: 720px){
+    .controls{grid-template-columns:1fr 1fr;}
+    .controls .field:nth-child(1){grid-column:1/3;}
+    .controls button{grid-column:1/3;}
+  }
+  .field label{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--paper-dim);
+    margin-bottom:8px;
+  }
+  .field input, .field select{
+    width:100%;
+    background:var(--ink-raised);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    color:var(--paper);
+    padding:12px 14px;
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    outline:none;
+  }
+  .field input:focus, .field select:focus{
+    border-color:var(--brass);
+    box-shadow:0 0 0 3px rgba(201,162,39,0.18);
+  }
+  .field input::placeholder{color:var(--paper-dim);}
+  button.generate{
+    background:var(--brass);
+    color:#171207;
+    border:none;
+    border-radius:var(--radius);
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    padding:12px 22px;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:background 0.15s ease, transform 0.1s ease;
+  }
+  button.generate:hover{background:var(--brass-bright);}
+  button.generate:active{transform:scale(0.98);}
+  button.generate:focus-visible{outline:2px solid var(--paper); outline-offset:2px;}
+
+  .hint{
+    font-size:13px;
+    color:var(--paper-dim);
+    margin-top:14px;
+  }
+
+  .results{
+    padding:36px 0 72px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+  }
+  @media (max-width:820px){ .results{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .results{grid-template-columns:1fr;} }
+  .empty-state{
+    grid-column:1/-1;
+    padding:48px 24px;
+    text-align:center;
+    color:var(--paper-dim);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    font-size:14px;
+  }
+
+  .tile{
+    position:relative;
+    background:var(--ink-raised);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:18px 16px 14px;
+    overflow:hidden;
+    transition:transform 0.18s ease, border-color 0.18s ease;
+  }
+  .tile:hover{ transform:translateY(-2px); border-color:rgba(201,162,39,0.5); }
+  .stamp{ display:flex; flex-wrap:wrap; gap:6px 0; margin-bottom:12px; }
+  .block{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:19px;
+    padding:3px 8px;
+    border-radius:2px;
+    line-height:1.2;
+  }
+  .block.a{
+    background:rgba(201,162,39,0.16);
+    color:var(--brass-bright);
+    transform:rotate(-1.2deg);
+    margin-right:-4px;
+  }
+  .block.b{
+    background:rgba(76,122,119,0.22);
+    color:#9FC7C3;
+    transform:rotate(1deg);
+  }
+  .tile:hover .block.a{transform:rotate(-0.3deg);}
+  .tile:hover .block.b{transform:rotate(0.3deg);}
+
+  .slug{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:14px;
+    color:var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-top:1px solid var(--line);
+    padding-top:10px;
+  }
+  .slug .name{word-break:break-all;}
+  .actions{ display:flex; gap:10px; margin-top:12px; }
+  .actions button, .actions a{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    font-weight:500;
+    color:var(--paper-dim);
+    background:none;
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:6px 10px;
+    cursor:pointer;
+    text-decoration:none;
+    transition:color 0.15s ease, border-color 0.15s ease;
+  }
+  .actions button:hover, .actions a:hover{ color:var(--paper); border-color:var(--paper-dim); }
+  .actions button.copied{ color:var(--brass-bright); border-color:var(--brass); }
+
+  .content{
+    padding:24px 0 8px;
+    border-top:1px solid var(--line);
+  }
+  .content h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:24px;
+    letter-spacing:-0.01em;
+    margin:36px 0 12px;
+  }
+  .content h2:first-child{margin-top:12px;}
+  .content p{
+    color:var(--paper-dim);
+    font-size:15.5px;
+    max-width:68ch;
+    margin:0 0 14px;
+  }
+  .faq{ margin-top:8px; border-top:1px solid var(--line); }
+  .faq details{ border-bottom:1px solid var(--line); padding:16px 0; }
+  .faq summary{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:15.5px;
+    color:var(--paper);
+    cursor:pointer;
+    list-style:none;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary::after{
+    content:"+";
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--brass);
+    font-size:18px;
+    margin-left:12px;
+    flex-shrink:0;
+  }
+  .faq details[open] summary::after{content:"–";}
+  .faq details p{ margin:12px 0 0; color:var(--paper-dim); font-size:15px; max-width:66ch; }
+
+  footer.note{
+    border-top:1px solid var(--line);
+    padding:28px 0 60px;
+    color:var(--paper-dim);
+    font-size:13px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .tile, .block, button{transition:none;}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="lang-switch">
+      <a href="../index.html" lang="en" hreflang="en">EN · English</a>
+    </div>
+    <header class="hero">
+      <p class="eyebrow">Generador de Nombres de Dominio</p>
+      <h1>Une dos palabras.<br><em>Crea</em> un nombre.</h1>
+      <p class="sub">Escribe una palabra que quieras usar, elige un estilo y obtén combinaciones de dos palabras reales, listas para registrar hoy mismo. Sin registro, sin esperas.</p>
+    </header>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="field">
+          <label for="seed">Tu palabra (opcional)</label>
+          <input id="seed" type="text" placeholder="ej. base, menta, norte" maxlength="16">
+        </div>
+        <div class="field">
+          <label for="style">Estilo</label>
+          <select id="style">
+            <option value="tech">Tecnología y startups</option>
+            <option value="nature">Naturaleza y orgánico</option>
+            <option value="playful">Divertido y desenfadado</option>
+            <option value="pro">Profesional</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="tld">Extensión</label>
+          <select id="tld">
+            <option value=".com">.com</option>
+            <option value=".io">.io</option>
+            <option value=".co">.co</option>
+            <option value=".app">.app</option>
+            <option value=".ai">.ai</option>
+            <option value=".es">.es</option>
+          </select>
+        </div>
+        <button class="generate" id="genBtn">Generar nombres</button>
+      </div>
+      <p class="hint">Los resultados se generan al instante en tu navegador. La disponibilidad no está garantizada — usa "Verificar" en cualquier resultado para confirmarlo en un registrador real.</p>
+    </section>
+
+    <section class="results" id="results">
+      <div class="empty-state">Tus ideas de nombres de dos palabras aparecerán aquí. Prueba con una palabra como "base" o simplemente presiona Generar.</div>
+    </section>
+
+    <section class="content">
+      <h2>Por qué un nombre de dos palabras sigue funcionando</h2>
+      <p>La mayoría de los dominios .com de una sola palabra ya están registrados desde hace años. Combinar dos palabras abre un abanico mucho más amplio de nombres que siguen disponibles, que suenan bien al decirlos en voz alta y que se recuerdan después de escucharlos una sola vez. Piensa en nombres como Mailchimp o Squarespace: ninguno es una palabra real del diccionario, pero cada uno está formado por dos piezas conocidas que encajan en algo nuevo.</p>
+      <p>Un buen nombre de dos palabras cumple dos funciones a la vez. Da una pista sobre lo que haces o la sensación que quieres transmitir, y al mismo tiempo se lee como una sola palabra propia una vez que las dos partes se unen. Por eso el generador de arriba limita cada combinación a 18 caracteres: pasado ese largo, el nombre deja de sentirse como una marca y empieza a sentirse como una frase.</p>
+
+      <h2>Cómo elegir una buena combinación</h2>
+      <p>Dilo en voz alta antes de decidirte. Dos palabras que se ven bien escritas pueden sonar incómodas al pronunciarlas, o formar accidentalmente otra palabra al juntarse sin espacio. Conviene combinar una palabra corta y directa con una segunda algo más descriptiva, para que el nombre tenga ritmo en vez de que ambas palabras se mezclen con el mismo peso. Y revisa la misma combinación en varias extensiones antes de encariñarte con una sola opción: un nombre ocupado en .com puede estar completamente libre en .io, .co o .es.</p>
+
+      <h2 id="faq">Preguntas frecuentes</h2>
+      <div class="faq">
+        <details>
+          <summary>¿Cómo se me ocurre un nombre de dominio de dos palabras?</summary>
+          <p>Empieza con una palabra que represente tu negocio: lo que ofreces, a quién sirves o la sensación que quieres transmitir. Luego combínala con una segunda palabra corta y sencilla de otra categoría, como una textura, un lugar o una acción. El generador de arriba hace esto automáticamente: escribe tu palabra, elige un estilo y él la combina con una lista curada por ti.</p>
+        </details>
+        <details>
+          <summary>¿Los dominios de dos palabras son buenos para el SEO?</summary>
+          <p>La longitud o el número de palabras del dominio no es un factor de posicionamiento directo en Google. Lo que realmente importa es que la gente pueda recordar tu nombre, escribirlo correctamente y reconocerlo cuando aparece en los resultados de búsqueda o en redes sociales. Un nombre claro de dos palabras suele ganar en ese aspecto, lo que a la larga ayuda al tráfico y a la tasa de clics.</p>
+        </details>
+        <details>
+          <summary>¿Debo poner un guion entre las dos palabras?</summary>
+          <p>En general, no. Los dominios con guion son más difíciles de decir por teléfono, más fáciles de escribir mal y suelen transmitir menos confianza a quien los ve. Si una combinación solo está disponible con guion, casi siempre conviene seguir buscando otra opción.</p>
+        </details>
+        <details>
+          <summary>¿Todavía puedo conseguir un buen .com de dos palabras en 2026?</summary>
+          <p>Sí. Las palabras comunes de una sola pieza en .com están prácticamente agotadas, pero las combinaciones de dos palabras generan miles de opciones nuevas, y constantemente se liberan más a medida que vencen registros antiguos. Si tus primeras ideas ya están ocupadas, prueba a invertir el orden de las palabras o a usar la misma combinación en .io, .co o .ai.</p>
+        </details>
+        <details>
+          <summary>¿Cuál es la diferencia entre .com, .io, .co y .es?</summary>
+          <p>.com sigue siendo la extensión más reconocida por el público general y es la opción más segura si está disponible. .io y .ai son comunes en marcas de tecnología y cada vez se aceptan más fuera de ese sector. .co es una alternativa más corta cuando el .com que quieres ya está registrado, y .es es una buena señal de identidad local para negocios enfocados en España.</p>
+        </details>
+      </div>
+    </section>
+
+    <footer class="note">
+      Creado como una herramienta rápida y de un solo propósito. Los resultados provienen de listas de palabras curadas y se combinan con tu entrada — no se guarda ni se envía nada a ningún servidor.
+    </footer>
+  </div>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Cómo se me ocurre un nombre de dominio de dos palabras?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Empieza con una palabra que represente tu negocio y combínala con una segunda palabra corta y sencilla de otra categoría, como una textura, un lugar o una acción."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Los dominios de dos palabras son buenos para el SEO?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "La longitud o el número de palabras del dominio no es un factor de posicionamiento directo, pero un nombre claro y memorable puede mejorar el reconocimiento y la tasa de clics con el tiempo."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Debo poner un guion entre las dos palabras?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "En general no. Los dominios con guion son más difíciles de decir en voz alta, más fáciles de escribir mal y transmiten menos confianza."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Todavía puedo conseguir un buen .com de dos palabras en 2026?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. Las palabras comunes de una sola pieza en .com están casi agotadas, pero las combinaciones de dos palabras abren miles de opciones nuevas en .com, .io, .co y .ai."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuál es la diferencia entre .com, .io, .co y .es?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": ".com es la extensión más reconocida, .io y .ai son comunes en marcas de tecnología, .co es una alternativa más corta y .es aporta identidad local para negocios en España."
+        }
+      }
+    ]
+  }
+  </script>
+
+<script>
+(function(){
+  const banks = {
+    tech: ["base","nodo","pila","pixel","logica","byte","nube","forja","red","bucle","chispa","vector","proto","senal","cifra","enlace","modulo","nucleo","script","indice"],
+    nature: ["musgo","cedro","rio","piedra","sauce","puerto","valle","brasa","escarcha","canon","marea","arboleda","cumbre","zarza","helecho","arroyo","glaciar","cardo","arrecife","duna"],
+    playful: ["risas","saltarin","garabato","bote","pelusa","tambaleo","mimoso","zoom","burbuja","alegre","brinco","ingenioso","pio","voltereta","agil","travieso","jovial","capricho","dulzura","chiste"],
+    pro: ["cumbre","meridiano","apice","esmero","vanguardia","atlas","carta","distrito","atalaya","baluarte","brujula","ancla","cresta","oficina","civico","emblema","norte","fuerte","gremio","estatuto"]
+  };
+
+  const seedInput = document.getElementById('seed');
+  const styleSelect = document.getElementById('style');
+  const tldSelect = document.getElementById('tld');
+  const genBtn = document.getElementById('genBtn');
+  const results = document.getElementById('results');
+
+  function cap(w){ return w.charAt(0).toUpperCase() + w.slice(1); }
+
+  function stripAccents(w){
+    return w.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  }
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  function generate(){
+    const seedRaw = stripAccents(seedInput.value.trim().toLowerCase()).replace(/[^a-z]/g,'');
+    const style = styleSelect.value;
+    const tld = tldSelect.value;
+    const bank = shuffle(banks[style]);
+
+    let pairs = [];
+    if(seedRaw){
+      bank.forEach(w => {
+        if(w !== seedRaw){
+          pairs.push([seedRaw, w]);
+          pairs.push([w, seedRaw]);
+        }
+      });
+      pairs = shuffle(pairs);
+    } else {
+      for(let i=0;i<bank.length-1;i+=2){
+        pairs.push([bank[i], bank[i+1]]);
+      }
+      pairs = shuffle(pairs);
+    }
+
+    pairs = pairs.filter(p => (p[0]+p[1]).length <= 18).slice(0,12);
+
+    if(pairs.length === 0){
+      results.innerHTML = '<div class="empty-state">Ninguna combinación encaja — prueba con una palabra más corta.</div>';
+      return;
+    }
+
+    results.innerHTML = pairs.map(p => {
+      const word1 = p[0], word2 = p[1];
+      const domain = stripAccents(word1+word2).toLowerCase();
+      const display = domain + tld;
+      const checkUrl = "https://www.namecheap.com/domains/registration/results/?domain=" + encodeURIComponent(domain + tld);
+      return `
+        <div class="tile">
+          <div class="stamp">
+            <span class="block a">${cap(word1)}</span>
+            <span class="block b">${cap(word2)}</span>
+          </div>
+          <div class="slug"><span class="name">${display}</span></div>
+          <div class="actions">
+            <button type="button" class="copy-btn" data-value="${display}">Copiar</button>
+            <a href="${checkUrl}" target="_blank" rel="noopener noreferrer">Verificar</a>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  results.addEventListener('click', function(e){
+    const btn = e.target.closest('.copy-btn');
+    if(!btn) return;
+    const val = btn.getAttribute('data-value');
+    navigator.clipboard.writeText(val).then(() => {
+      const original = btn.textContent;
+      btn.textContent = 'Copiado';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.classList.remove('copied');
+      }, 1400);
+    });
+  });
+
+  genBtn.addEventListener('click', generate);
+  seedInput.addEventListener('keydown', e => { if(e.key === 'Enter') generate(); });
+
+  generate();
+})();
+</script>
+</body>
+</html>

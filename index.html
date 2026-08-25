@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Word Domain Name Generator — Instant Brandable Domain Ideas</title>
+<meta name="description" content="Generate brandable two word domain names instantly. Pick a seed word and a style, get real .com, .io and .co ideas with one click availability checks.">
+<link rel="alternate" hreflang="en" href="index.html">
+<link rel="alternate" hreflang="es" href="es/index.html">
+<link rel="alternate" hreflang="x-default" href="index.html">
+<link rel="canonical" href="https://YOUR-DOMAIN.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12181A;
+    --ink-raised:#1B2325;
+    --paper:#EDEDE6;
+    --paper-dim:#B9BDB6;
+    --brass:#C9A227;
+    --brass-bright:#E0BA3D;
+    --teal:#4C7A77;
+    --line: rgba(237,237,230,0.12);
+    --radius: 3px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--brass-bright);}
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+  header.hero{
+    padding:64px 0 40px;
+    border-bottom:1px solid var(--line);
+  }
+  .lang-switch{
+    display:flex;
+    justify-content:flex-end;
+    padding-top:20px;
+  }
+  .lang-switch a{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.05em;
+    color:var(--paper-dim);
+    text-decoration:none;
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:6px 12px;
+    transition:color 0.15s ease, border-color 0.15s ease;
+  }
+  .lang-switch a:hover{
+    color:var(--brass-bright);
+    border-color:var(--brass);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin:0 0 18px;
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-optical-sizing:auto;
+    font-weight:600;
+    font-size:clamp(32px,5.2vw,52px);
+    line-height:1.08;
+    margin:0 0 18px;
+    letter-spacing:-0.01em;
+  }
+  h1 em{
+    font-style:italic;
+    font-weight:400;
+    color:var(--brass-bright);
+  }
+  .sub{
+    font-size:17px;
+    color:var(--paper-dim);
+    max-width:56ch;
+    margin:0;
+  }
+
+  /* Generator panel */
+  .panel{
+    padding:32px 0 8px;
+  }
+  .controls{
+    display:grid;
+    grid-template-columns: 1.3fr 1fr 0.9fr auto;
+    gap:12px;
+    align-items:end;
+  }
+  @media (max-width: 720px){
+    .controls{grid-template-columns:1fr 1fr;}
+    .controls .field:nth-child(1){grid-column:1/3;}
+    .controls button{grid-column:1/3;}
+  }
+  .field label{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--paper-dim);
+    margin-bottom:8px;
+  }
+  .field input, .field select{
+    width:100%;
+    background:var(--ink-raised);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    color:var(--paper);
+    padding:12px 14px;
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    outline:none;
+  }
+  .field input:focus, .field select:focus{
+    border-color:var(--brass);
+    box-shadow:0 0 0 3px rgba(201,162,39,0.18);
+  }
+  .field input::placeholder{color:var(--paper-dim);}
+  button.generate{
+    background:var(--brass);
+    color:#171207;
+    border:none;
+    border-radius:var(--radius);
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    padding:12px 22px;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:background 0.15s ease, transform 0.1s ease;
+  }
+  button.generate:hover{background:var(--brass-bright);}
+  button.generate:active{transform:scale(0.98);}
+  button.generate:focus-visible{outline:2px solid var(--paper); outline-offset:2px;}
+
+  .hint{
+    font-size:13px;
+    color:var(--paper-dim);
+    margin-top:14px;
+  }
+
+  /* Results */
+  .results{
+    padding:36px 0 72px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+  }
+  @media (max-width:820px){
+    .results{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:560px){
+    .results{grid-template-columns:1fr;}
+  }
+  .empty-state{
+    grid-column:1/-1;
+    padding:48px 24px;
+    text-align:center;
+    color:var(--paper-dim);
+    border:1px dashed var(--line);
+    border-radius:6px;
+    font-size:14px;
+  }
+
+  .tile{
+    position:relative;
+    background:var(--ink-raised);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:18px 16px 14px;
+    overflow:hidden;
+    transition:transform 0.18s ease, border-color 0.18s ease;
+  }
+  .tile:hover{
+    transform:translateY(-2px);
+    border-color:rgba(201,162,39,0.5);
+  }
+  .stamp{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 0;
+    margin-bottom:12px;
+  }
+  .block{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:19px;
+    padding:3px 8px;
+    border-radius:2px;
+    line-height:1.2;
+  }
+  .block.a{
+    background:rgba(201,162,39,0.16);
+    color:var(--brass-bright);
+    transform:rotate(-1.2deg);
+    margin-right:-4px;
+  }
+  .block.b{
+    background:rgba(76,122,119,0.22);
+    color:#9FC7C3;
+    transform:rotate(1deg);
+  }
+  .tile:hover .block.a{transform:rotate(-0.3deg);}
+  .tile:hover .block.b{transform:rotate(0.3deg);}
+
+  .slug{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:14px;
+    color:var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-top:1px solid var(--line);
+    padding-top:10px;
+  }
+  .slug .name{word-break:break-all;}
+  .actions{
+    display:flex;
+    gap:10px;
+    margin-top:12px;
+  }
+  .actions button, .actions a{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    font-weight:500;
+    color:var(--paper-dim);
+    background:none;
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:6px 10px;
+    cursor:pointer;
+    text-decoration:none;
+    transition:color 0.15s ease, border-color 0.15s ease;
+  }
+  .actions button:hover, .actions a:hover{
+    color:var(--paper);
+    border-color:var(--paper-dim);
+  }
+  .actions button.copied{
+    color:var(--brass-bright);
+    border-color:var(--brass);
+  }
+
+  /* Content section */
+  .content{
+    padding:24px 0 8px;
+    border-top:1px solid var(--line);
+  }
+  .content h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:24px;
+    letter-spacing:-0.01em;
+    margin:36px 0 12px;
+  }
+  .content h2:first-child{margin-top:12px;}
+  .content p{
+    color:var(--paper-dim);
+    font-size:15.5px;
+    max-width:68ch;
+    margin:0 0 14px;
+  }
+  .faq{
+    margin-top:8px;
+    border-top:1px solid var(--line);
+  }
+  .faq details{
+    border-bottom:1px solid var(--line);
+    padding:16px 0;
+  }
+  .faq summary{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:15.5px;
+    color:var(--paper);
+    cursor:pointer;
+    list-style:none;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary::after{
+    content:"+";
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--brass);
+    font-size:18px;
+    margin-left:12px;
+    flex-shrink:0;
+  }
+  .faq details[open] summary::after{content:"–";}
+  .faq details p{
+    margin:12px 0 0;
+    color:var(--paper-dim);
+    font-size:15px;
+    max-width:66ch;
+  }
+
+  footer.note{
+    border-top:1px solid var(--line);
+    padding:28px 0 60px;
+    color:var(--paper-dim);
+    font-size:13px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .tile, .block, button{transition:none;}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="lang-switch">
+      <a href="es/index.html" lang="es" hreflang="es">ES · Español</a>
+    </div>
+    <header class="hero">
+      <p class="eyebrow">Two Word Domain Name Generator</p>
+      <h1>Pair a word.<br><em>Press</em> a name.</h1>
+      <p class="sub">Type a word you want in your domain, pick a style, and get real two-word combinations you can register today — no sign-up, no waiting.</p>
+    </header>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="field">
+          <label for="seed">Your word (optional)</label>
+          <input id="seed" type="text" placeholder="e.g. base, mint, north" maxlength="16">
+        </div>
+        <div class="field">
+          <label for="style">Style</label>
+          <select id="style">
+            <option value="tech">Tech &amp; startup</option>
+            <option value="nature">Nature &amp; organic</option>
+            <option value="playful">Playful &amp; fun</option>
+            <option value="pro">Professional</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="tld">Extension</label>
+          <select id="tld">
+            <option value=".com">.com</option>
+            <option value=".io">.io</option>
+            <option value=".co">.co</option>
+            <option value=".app">.app</option>
+            <option value=".ai">.ai</option>
+          </select>
+        </div>
+        <button class="generate" id="genBtn">Generate names</button>
+      </div>
+      <p class="hint">Results are generated instantly in your browser. Availability isn't guaranteed — use "Check" on any result to confirm on a live registrar.</p>
+    </section>
+
+    <section class="results" id="results">
+      <div class="empty-state">Your two-word name ideas will appear here. Try a word like "base" or just hit Generate.</div>
+    </section>
+
+    <section class="content">
+      <h2>Why two-word domain names still work</h2>
+      <p>Most short, single-word .com domains were claimed years ago. Pairing two words together opens up a much bigger pool of names that are still available, easy to say out loud, and easy to remember after someone hears them once. Think of names like Basecamp, Mailchimp, or Squarespace — none of them are real dictionary words, but each one is built from two familiar pieces that click together into something new.</p>
+      <p>A good two-word domain does two jobs at once. It gives people a hint about what you do or how your brand feels, and it reads as a single, ownable word once the two pieces are pushed together. That's why the generator above keeps every combination under 18 characters — past that length, a name stops feeling like a brand and starts feeling like a sentence.</p>
+
+      <h2>How to pick a strong combination</h2>
+      <p>Say it out loud before you commit to it. Two words that look fine in text can be awkward to say, or can accidentally spell something else once the space disappears. Favor a short, punchy word paired with a longer, more descriptive one — it gives the name rhythm instead of two words of equal weight blurring together. And check the domain across a couple of extensions before you fall in love with one option; a name that's taken on .com might be wide open on .io, .co, or .ai.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+      <div class="faq">
+        <details>
+          <summary>How do I come up with a two-word domain name?</summary>
+          <p>Start with one word that matters to your business — what you make, who you serve, or the feeling you want people to have. Then pair it with a short, simple second word from a different category, like a texture, a place, or an action word. The generator above does this automatically: type your word in, pick a style, and it pairs it against a curated list for you.</p>
+        </details>
+        <details>
+          <summary>Are two-word domain names good for SEO?</summary>
+          <p>Domain length and word count aren't a direct Google ranking factor. What matters more is whether people can remember your name, type it correctly, and recognize it when it shows up in search results or social posts. A clear two-word name usually wins on that front, which indirectly helps traffic and click-through rate over time.</p>
+        </details>
+        <details>
+          <summary>Should I put a hyphen between the two words?</summary>
+          <p>Generally, no. Hyphenated domains are harder to say over the phone, easier to mistype, and can look less trustworthy to visitors. If a two-word combination is only available with a hyphen, it's usually worth continuing to search rather than settling for it.</p>
+        </details>
+        <details>
+          <summary>Can I still get a good two-word .com in 2026?</summary>
+          <p>Yes. Single, common dictionary words on .com are mostly gone, but two-word combinations create thousands of new options, and new ones open up constantly as older registrations lapse. If your first few picks are taken, try swapping the word order or trying the same pair on .io, .co, or .ai.</p>
+        </details>
+        <details>
+          <summary>What's the difference between .com, .io, .co, and .ai?</summary>
+          <p>.com is still the most familiar extension to the widest audience and is a safe default if it's available. .io and .ai are common in tech and software branding and are widely accepted even outside the industry now. .co is a shorter, often cheaper alternative when your first-choice .com is taken.</p>
+        </details>
+      </div>
+    </section>
+
+    <footer class="note">
+      Built as a fast, single-purpose tool. Results are drawn from curated word lists and combined with your input — nothing is stored or sent anywhere.
+    </footer>
+  </div>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I come up with a two-word domain name?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Start with one word that matters to your business, then pair it with a short, simple second word from a different category, like a texture, a place, or an action word."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are two-word domain names good for SEO?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Domain length and word count are not a direct Google ranking factor, but a clear, memorable two-word name can improve recognition and click-through rate over time."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I put a hyphen between the two words?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Generally no. Hyphenated domains are harder to say aloud, easier to mistype, and can look less trustworthy to visitors."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I still get a good two-word .com in 2026?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Single common dictionary words on .com are mostly taken, but two-word combinations open up thousands of new options across .com, .io, .co, and .ai."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the difference between .com, .io, .co, and .ai?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": ".com is the most broadly recognized extension, .io and .ai are common in tech branding, and .co is a shorter alternative when the matching .com is unavailable."
+        }
+      }
+    ]
+  }
+  </script>
+
+<script>
+(function(){
+  const banks = {
+    tech: ["base","node","stack","pixel","logic","byte","cloud","forge","grid","loop","spark","vector","proto","signal","cipher","relay","module","kernel","script","index"],
+    nature: ["moss","cedar","river","stone","willow","harbor","meadow","ember","frost","canyon","tide","grove","summit","bramble","fern","brook","glacier","thistle","reef","dune"],
+    playful: ["giggle","zippy","doodle","pogo","fluff","wobble","snug","zoom","bloop","peppy","bounce","nifty","whiz","chirp","tumble","spry","perky","jolly","quirk","dandy"],
+    pro: ["summit","meridian","cornerstone","apex","sterling","vantage","keystone","northgate","atlas","ledger","charter","precinct","harbor","bastion","compass","anchor","crest","bureau","civic","emblem"]
+  };
+
+  const seedInput = document.getElementById('seed');
+  const styleSelect = document.getElementById('style');
+  const tldSelect = document.getElementById('tld');
+  const genBtn = document.getElementById('genBtn');
+  const results = document.getElementById('results');
+
+  function cap(w){ return w.charAt(0).toUpperCase() + w.slice(1); }
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  function generate(){
+    const seedRaw = seedInput.value.trim().toLowerCase().replace(/[^a-z]/g,'');
+    const style = styleSelect.value;
+    const tld = tldSelect.value;
+    const bank = shuffle(banks[style]);
+
+    let pairs = [];
+    if(seedRaw){
+      bank.forEach(w => {
+        if(w !== seedRaw){
+          pairs.push([seedRaw, w]);
+          pairs.push([w, seedRaw]);
+        }
+      });
+      pairs = shuffle(pairs);
+    } else {
+      for(let i=0;i<bank.length-1;i+=2){
+        pairs.push([bank[i], bank[i+1]]);
+      }
+      pairs = shuffle(pairs);
+    }
+
+    // filter to reasonable brandable length, then take 12
+    pairs = pairs.filter(p => (p[0]+p[1]).length <= 18).slice(0,12);
+
+    if(pairs.length === 0){
+      results.innerHTML = '<div class="empty-state">No combinations fit — try a shorter word.</div>';
+      return;
+    }
+
+    results.innerHTML = pairs.map(p => {
+      const word1 = p[0], word2 = p[1];
+      const domain = (word1+word2).toLowerCase();
+      const display = domain + tld;
+      const checkUrl = "https://www.namecheap.com/domains/registration/results/?domain=" + encodeURIComponent(domain + tld);
+      return `
+        <div class="tile">
+          <div class="stamp">
+            <span class="block a">${cap(word1)}</span>
+            <span class="block b">${cap(word2)}</span>
+          </div>
+          <div class="slug"><span class="name">${display}</span></div>
+          <div class="actions">
+            <button type="button" class="copy-btn" data-value="${display}">Copy</button>
+            <a href="${checkUrl}" target="_blank" rel="noopener noreferrer">Check</a>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  results.addEventListener('click', function(e){
+    const btn = e.target.closest('.copy-btn');
+    if(!btn) return;
+    const val = btn.getAttribute('data-value');
+    navigator.clipboard.writeText(val).then(() => {
+      const original = btn.textContent;
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.classList.remove('copied');
+      }, 1400);
+    });
+  });
+
+  genBtn.addEventListener('click', generate);
+  seedInput.addEventListener('keydown', e => { if(e.key === 'Enter') generate(); });
+
+  // Populate with an initial set so the page never feels empty on load
+  generate();
+})();
+</script>
+</body>
+</html>
