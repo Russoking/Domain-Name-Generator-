@@ -314,11 +314,37 @@
     max-width:66ch;
   }
 
+  .next-step{padding:8px 0 8px;border-top:1px solid var(--line);}
+  .next-step h2{font-family:'Fraunces',serif;font-weight:600;font-size:21px;margin:32px 0 16px;}
+  .next-step-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px;}
+  @media (max-width:600px){.next-step-grid{grid-template-columns:1fr;}}
+  .next-step-card{
+    display:block;background:var(--ink-raised);border:1px solid var(--line);border-radius:6px;
+    padding:20px 22px;text-decoration:none;color:var(--paper);transition:border-color 0.15s ease;
+  }
+  .next-step-card:hover{border-color:var(--brass);}
+  .next-step-card .tag-row{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--teal);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;}
+  .next-step-card h3{font-family:'Fraunces',serif;font-weight:600;font-size:16px;margin:0 0 6px;}
+  .next-step-card p{color:var(--paper-dim);font-size:13.5px;margin:0;}
+
   footer.note{
     border-top:1px solid var(--line);
     padding:28px 0 60px;
     color:var(--paper-dim);
     font-size:13px;
+  }
+  footer.note .footer-links{
+    margin-top:14px;
+  }
+  footer.note .footer-links a{
+    color:var(--paper-dim);
+    margin-right:18px;
+    text-decoration:none;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+  }
+  footer.note .footer-links a:hover{
+    color:var(--brass-bright);
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -404,8 +430,27 @@
       </div>
     </section>
 
+    <section class="next-step">
+      <h2>Choose your next step</h2>
+      <div class="next-step-grid">
+        <a class="next-step-card" href="domain-name-ideas-by-industry.html">
+          <div class="tag-row">Name Ideas · 6 min read</div>
+          <h3>Browse 100+ examples by industry</h3>
+          <p>See real two-word pairings across tech, food, fitness, fashion, creative, and finance before you generate your own.</p>
+        </a>
+        <a class="next-step-card" href="famous-two-word-brands.html">
+          <div class="tag-row">Case Studies · 4 min read</div>
+          <h3>See how famous brands did it</h3>
+          <p>Mailchimp, Basecamp, Squarespace and more — what makes each two-word pairing actually work.</p>
+        </a>
+      </div>
+    </section>
+
     <footer class="note">
       Built as a fast, single-purpose tool. Results are drawn from curated word lists and combined with your input — nothing is stored or sent anywhere.
+      <div class="footer-links">
+        <a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy Policy</a><a href="domain-name-ideas-by-industry.html">Name Ideas by Industry</a><a href="famous-two-word-brands.html">Famous Brands</a>
+      </div>
     </footer>
   </div>
 

@@ -276,6 +276,19 @@
   .faq details[open] summary::after{content:"–";}
   .faq details p{ margin:12px 0 0; color:var(--paper-dim); font-size:15px; max-width:66ch; }
 
+  footer.note .footer-links{margin-top:14px;}
+  footer.note .footer-links a{color:var(--paper-dim);margin-right:18px;text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:12px;}
+  footer.note .footer-links a:hover{color:var(--brass-bright);}
+  .next-step{padding:8px 0 8px;border-top:1px solid var(--line);}
+  .next-step h2{font-family:'Fraunces',serif;font-weight:600;font-size:21px;margin:32px 0 16px;}
+  .next-step-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px;}
+  @media (max-width:600px){.next-step-grid{grid-template-columns:1fr;}}
+  .next-step-card{display:block;background:var(--ink-raised);border:1px solid var(--line);border-radius:6px;padding:20px 22px;text-decoration:none;color:var(--paper);transition:border-color 0.15s ease;}
+  .next-step-card:hover{border-color:var(--brass);}
+  .next-step-card .tag-row{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--teal);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;}
+  .next-step-card h3{font-family:'Fraunces',serif;font-weight:600;font-size:16px;margin:0 0 6px;}
+  .next-step-card p{color:var(--paper-dim);font-size:13.5px;margin:0;}
+
   footer.note{
     border-top:1px solid var(--line);
     padding:28px 0 60px;
@@ -367,8 +380,27 @@
       </div>
     </section>
 
+    <section class="next-step">
+      <h2>Elige tu siguiente paso</h2>
+      <div class="next-step-grid">
+        <a class="next-step-card" href="domain-name-ideas-by-industry.html">
+          <div class="tag-row">Ideas de Nombres · 6 min de lectura</div>
+          <h3>Explora más de 100 ejemplos por industria</h3>
+          <p>Mira combinaciones reales de dos palabras en tecnología, comida, fitness, moda, creativo y finanzas antes de generar la tuya.</p>
+        </a>
+        <a class="next-step-card" href="famous-two-word-brands.html">
+          <div class="tag-row">Casos de Estudio · 4 min de lectura</div>
+          <h3>Mira cómo lo hicieron marcas famosas</h3>
+          <p>Mailchimp, Basecamp, Squarespace y más — qué hace que cada combinación de dos palabras funcione de verdad.</p>
+        </a>
+      </div>
+    </section>
+
     <footer class="note">
       Creado como una herramienta rápida y de un solo propósito. Los resultados provienen de listas de palabras curadas y se combinan con tu entrada — no se guarda ni se envía nada a ningún servidor.
+      <div class="footer-links">
+        <a href="domain-name-ideas-by-industry.html">Ideas por Industria</a><a href="famous-two-word-brands.html">Marcas Famosas</a>
+      </div>
     </footer>
   </div>
 
